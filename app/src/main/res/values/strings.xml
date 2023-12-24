@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">PoojaSamagri</string>
+    <string name="welcome">Welcome</string>
+    <string name="name">Name</string>
+    <string name="mobile">Mobile</string>
+    <string name="please_enter_login_details">Please Enter Login Details</string>
+    <string name="login">Login</string>
+    <string name="pooja_samagari">Pooja Samagari</string>
+    <string name="otp_verification">OTP Verification</string>
+    <string name="verify">Verify</string>
+    <string name="didn_t_receive_an_otp">Didn\'t receive an OTP?</string>
+    <string name="resend_otp">Resend OTP</string>
+</resources>
