@@ -6,8 +6,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatImageView
-import com.slyked.poojasamagri.MainActivity
 import com.slyked.poojasamagri.R
 import com.slyked.poojasamagri.databinding.ActivitySpalshBinding
 

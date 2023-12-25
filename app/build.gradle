@@ -52,7 +52,12 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth-api-phone:18.0.1'
 
     // OTP View
-
     implementation 'com.github.ozcanalasalvar:otpview:2.0.1'
+
+    // location library
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
+
+    // Animation Library
+    implementation 'com.airbnb.android:lottie:6.2.0'
 
 }
