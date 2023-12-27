@@ -16,4 +16,7 @@
     <string name="home">Home</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search_products">Search Products</string>
+    <string name="products">Products</string>
+    <string name="view_all">View All</string>
 </resources>
