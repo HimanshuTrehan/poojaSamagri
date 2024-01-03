@@ -50,11 +50,16 @@ class LocationDetectionScreen : AppCompatActivity() {
                                 Log.e("PoojaSamagri", "Locality\n${list[0].locality}")
                                 Log.e("PoojaSamagri","Address\n${list[0].getAddressLine(0)}")
 
-                            val intent = Intent(this, MainActivity::class.java)
-                            startActivity(intent)
+//                            val intent = Intent(this, MainActivity::class.java)
+//                            startActivity(intent)
                         }
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
                     }
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
                 }
+
             } else {
                 Toast.makeText(this, "Please turn on location", Toast.LENGTH_LONG).show()
                 val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
