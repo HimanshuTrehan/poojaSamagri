@@ -23,7 +23,7 @@ class SplashScreen : AppCompatActivity() {
 
     private fun navigateToHome() {
 
-        val animation = AnimationUtils.loadAnimation(this,R.anim.anim)
+        val animation = AnimationUtils.loadAnimation(this,R.anim.zoom_in)
         binding.splashImg.startAnimation(animation)
 
         Handler().postDelayed(
@@ -32,8 +32,15 @@ class SplashScreen : AppCompatActivity() {
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
                 finish()
-            },2000
+            },3100
 
         )
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (!binding.splashImg.animation.hasEnded()) {
+            binding.splashImg.clearAnimation()
+        }
     }
 }
