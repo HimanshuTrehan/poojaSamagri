@@ -5,18 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.slyked.poojasamagri.R
-import com.slyked.poojasamagri.adapter.CategoryAdapter
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
+import com.slyked.poojasamagri.adapter.CategoryListAdapter
 import com.slyked.poojasamagri.databinding.FragmentCategoryBinding
-import com.slyked.poojasamagri.databinding.FragmentHomeBinding
 
 
 class CategoryFragment : Fragment() {
 
     lateinit var binding: FragmentCategoryBinding
-    lateinit var categoryAdapter: CategoryAdapter
+    lateinit var categoryListAdapter: CategoryListAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,9 +28,9 @@ class CategoryFragment : Fragment() {
     }
 
     private fun setCategoryRecycler() {
-        binding.categoriesRecyclerView.layoutManager = GridLayoutManager(context,2)
-        categoryAdapter = CategoryAdapter(requireContext())
-        binding.categoriesRecyclerView.adapter = categoryAdapter
+        binding.categoriesRecyclerView.layoutManager = LinearLayoutManager(context,VERTICAL,false)
+        categoryListAdapter = CategoryListAdapter(requireContext())
+        binding.categoriesRecyclerView.adapter = categoryListAdapter
 
     }
 

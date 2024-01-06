@@ -2,6 +2,7 @@
 <resources>
     <color name="primary">#F5C000</color>
     <color name="background">#F9F9F9</color>
+    <color name="product_background">#f3f3f3</color>
     <color name="backgroundAd">#FFFFFFFF</color>
     <color name="error">#F01F0E</color>
     <color name="success">#2AA952</color>

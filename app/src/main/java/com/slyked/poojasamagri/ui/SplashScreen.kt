@@ -8,6 +8,8 @@ import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import com.slyked.poojasamagri.R
 import com.slyked.poojasamagri.databinding.ActivitySpalshBinding
+import com.slyked.poojasamagri.utils.Constants
+import com.slyked.poojasamagri.utils.manager.SharedPreferencesManager
 
 @SuppressLint("CustomSplashScreen")
 class SplashScreen : AppCompatActivity() {
@@ -17,15 +19,31 @@ class SplashScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySpalshBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        navigateToHome()
+        startAnimation()
+        val userName = SharedPreferencesManager.getKey(applicationContext,Constants.USER_NAME)
+        if (userName !=null && userName.isNotBlank()) {
+            navigateToHomeScreen()
+        }else{
+            navigateToLoginScreen()
+        }
     }
+  private fun startAnimation()
+  {
+      val animation = AnimationUtils.loadAnimation(this,R.anim.zoom_in)
+      binding.splashImg.startAnimation(animation)
+  }
+    private fun navigateToHomeScreen() {
+        Handler().postDelayed(
+            {
+                val intent = Intent(this, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                finish()
+            },3100
 
-    private fun navigateToHome() {
-
-        val animation = AnimationUtils.loadAnimation(this,R.anim.zoom_in)
-        binding.splashImg.startAnimation(animation)
-
+        )
+    }
+    private fun navigateToLoginScreen() {
         Handler().postDelayed(
             {
                 val intent = Intent(this, LoginScreen::class.java)

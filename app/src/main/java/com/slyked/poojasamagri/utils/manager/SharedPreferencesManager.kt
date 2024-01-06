@@ -10,6 +10,7 @@ class SharedPreferencesManager {
     companion object {
         lateinit var sharedPreferences: SharedPreferences
         lateinit var editor: SharedPreferences.Editor
+
     fun putKey(context: Context, Key: String?, Value: String?) {
         sharedPreferences =
             context.getSharedPreferences(Constants.POOJA_APP_CACHE_DIRECTORY, Context.MODE_PRIVATE)
