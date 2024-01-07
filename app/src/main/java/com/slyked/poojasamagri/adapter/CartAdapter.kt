@@ -30,7 +30,7 @@ class CartAdapter(context: Context): RecyclerView.Adapter<CartAdapter.ViewHolder
     }
 
     override fun getItemCount(): Int {
-        return 10
+        return 4
     }
 
     public class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
