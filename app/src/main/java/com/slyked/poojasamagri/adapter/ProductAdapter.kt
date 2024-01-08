@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
@@ -25,7 +27,16 @@ class ProductAdapter( context: Context,): RecyclerView.Adapter<ProductAdapter.Vi
 
     override fun onBindViewHolder(holder: ProductAdapter.ViewHolder, position: Int) {
 
-
+        holder.minus.visibility = GONE
+        holder.quantity.visibility = GONE
+        holder.add.setOnClickListener {
+            holder.minus.visibility = VISIBLE
+            holder.quantity.visibility = VISIBLE
+        }
+        holder.minus.setOnClickListener {
+            holder.minus.visibility = GONE
+            holder.quantity.visibility = GONE
+        }
         holder.itemView.setOnClickListener {
             goDetailsPage()
         }
@@ -38,13 +49,9 @@ class ProductAdapter( context: Context,): RecyclerView.Adapter<ProductAdapter.Vi
 
     public class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
 
-//        val productImage_singleProduct:ImageView = itemView.findViewById(R.id.productImage_singleProduct)
-//        val productRating_singleProduct:RatingBar = itemView.findViewById(R.id.productRating_singleProduct)
-//        val productBrandName_singleProduct:TextView = itemView.findViewById(R.id.productBrandName_singleProduct)
-//        val discountTv_singleProduct:TextView = itemView.findViewById(R.id.discountTv_singleProduct)
-//        val productName_singleProduct:TextView = itemView.findViewById(R.id.productName_singleProduct)
-//        val productPrice_singleProduct:TextView = itemView.findViewById(R.id.productPrice_singleProduct)
-//        val discount_singleProduct = itemView.findViewById<LinearLayout>(R.id.discount_singleProduct)
+        val add = itemView.findViewById<ImageView>(R.id.add_quantity)
+        val minus = itemView.findViewById<ImageView>(R.id.minus_quantity)
+        val quantity = itemView.findViewById<TextView>(R.id.quantity)
 
 
     }

@@ -17,8 +17,10 @@ class ViewAllProducts : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityViewAllProductsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.back.setOnClickListener {
+            finish()
+        }
     setProductRecycler()
-
     }
 
     private fun setProductRecycler() {

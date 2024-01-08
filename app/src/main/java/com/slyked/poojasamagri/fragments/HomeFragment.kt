@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.slyked.poojasamagri.adapter.BannerAdapter
 import com.slyked.poojasamagri.adapter.CategoryAdapter
@@ -82,9 +83,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun setProductRecycler() {
-        binding.productRecyclerView.layoutManager = LinearLayoutManager(context,
-            LinearLayoutManager.HORIZONTAL, false)
+        binding.productRecyclerView.layoutManager = GridLayoutManager(context,2)
         product_adapter = ProductAdapter(requireContext())
+       // binding.productRecyclerView.setNestedScrollingEnabled(false);
         binding.productRecyclerView.adapter = product_adapter
     }
 

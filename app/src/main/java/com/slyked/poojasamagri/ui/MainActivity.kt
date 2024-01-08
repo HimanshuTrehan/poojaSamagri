@@ -6,10 +6,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.slyked.poojasamagri.R
 import com.slyked.poojasamagri.databinding.ActivityMainBinding
-import com.slyked.poojasamagri.fragments.CartFragment
-import com.slyked.poojasamagri.fragments.CategoryFragment
-import com.slyked.poojasamagri.fragments.HomeFragment
-import com.slyked.poojasamagri.fragments.ProfileFragment
+import com.slyked.poojasamagri.fragments.*
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
@@ -24,8 +21,8 @@ class MainActivity : AppCompatActivity() {
                     loadFragment(HomeFragment())
                     true
                 }
-                R.id.categories -> {
-                    loadFragment(CategoryFragment())
+                R.id.fav -> {
+                    loadFragment(FavouriteFragment())
                     true
                 }
                 R.id.cart -> {
