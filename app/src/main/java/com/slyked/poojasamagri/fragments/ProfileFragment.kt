@@ -34,7 +34,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun animateView() {
-        binding.expandIcon.setOnClickListener {
+        binding.editProfileLayout.setOnClickListener {
             // If the CardView is already expanded, set its visibility
             // to gone and change the expand less icon to expand more.
             if (binding.hiddenProfileLayout.getVisibility() === View.VISIBLE) {

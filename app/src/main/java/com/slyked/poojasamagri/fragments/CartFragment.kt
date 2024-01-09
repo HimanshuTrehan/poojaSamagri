@@ -1,5 +1,6 @@
 package com.slyked.poojasamagri.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import com.slyked.poojasamagri.R
 import com.slyked.poojasamagri.adapter.CartAdapter
 import com.slyked.poojasamagri.databinding.FragmentCartBinding
 import com.slyked.poojasamagri.databinding.FragmentHomeBinding
+import com.slyked.poojasamagri.ui.OrderSummary
 
 
 class CartFragment : Fragment() {
@@ -23,6 +25,10 @@ class CartFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentCartBinding.inflate(inflater,container,false);
         setupRecycler()
+        binding.checkoutBtn.setOnClickListener {
+            val intent = Intent(requireContext(),OrderSummary::class.java)
+            startActivity(intent)
+        }
         return binding.root
     }
 
