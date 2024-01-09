@@ -2,12 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="150dp"
     android:layout_height="wrap_content"
     android:background="@color/background"
-    android:layout_marginLeft="20dp"
     android:layout_marginRight="20dp"
-    android:layout_marginVertical="10dp"
     android:layout_gravity="center"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -15,7 +13,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="wrap_content"
-        android:layout_height="140dp"
+        android:layout_height="130dp"
         app:cardCornerRadius="10dp"
         app:cardElevation="0dp"
         app:cardBackgroundColor="@color/backgroundAd"
@@ -103,21 +101,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxLines="1"
+            android:layout_marginEnd="30dp"
             android:text="Cycle Agarbati"
-            android:fontFamily="@font/metropolis_m"
             android:textColor="@color/mainText"
+            android:fontFamily="@font/metropolis_m"
             android:textSize="14sp" />
         <TextView
+            android:layout_marginEnd="30dp"
             android:id="@+id/productQuantity_singleProduct"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="1"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="3dp"
             android:text="1 Pack"
             android:textColor="@color/textAd"
             android:textSize="14sp" />
 
         <TextView
+            android:layout_marginEnd="30dp"
             android:id="@+id/productPrice_singleProduct"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -127,7 +128,7 @@
             android:text="\u20B9 100.00"
             android:textStyle="bold"
             android:textColor="@color/primary"
-            android:textSize="14sp" />
+            android:textSize="16sp" />
 
 
 
@@ -139,7 +140,6 @@
         android:id="@+id/quantity_layout"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-       app:layout_constraintTop_toBottomOf="@id/cardView"
         android:layout_width="30dp"
         android:layout_height="match_parent"
         android:background="@drawable/top_left_rounded_corner"

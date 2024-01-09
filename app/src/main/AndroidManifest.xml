@@ -17,6 +17,20 @@
         android:theme="@style/Theme.PoojaSamagari"
         tools:targetApi="31">
         <activity
+            android:name=".OrderDetailsActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.SearchActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ui.ProductDetailsActivity"
             android:exported="false">
             <meta-data
@@ -55,7 +69,15 @@
                 android:value="" />
         </activity>
         <activity android:name=".ui.LocationDetectionScreen" />
-
+        <activity
+            android:name=".CategoryListActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity android:name="com.slyked.poojasamagri.ui.OrderDetailsActivity" />
+        <activity android:name="com.slyked.poojasamagri.ui.CategoryListActivity" />
     </application>
 
 </manifest>

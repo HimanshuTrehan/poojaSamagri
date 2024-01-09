@@ -40,7 +40,7 @@ public class CirclePagerIndicatorDecoration extends RecyclerView.ItemDecoration 
         float indicatorStartX = (parent.getWidth() - indicatorTotalWidth) / 2F;
 
         // center vertically in the allotted space
-        float indicatorPosY = parent.getHeight() - mIndicatorHeight * 2F;
+        float indicatorPosY = parent.getHeight() - (mIndicatorHeight * 2F) -20;
 
         drawInactiveIndicators(c, indicatorStartX, indicatorPosY, itemCount);
 

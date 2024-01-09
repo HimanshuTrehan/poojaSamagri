@@ -1,5 +1,6 @@
 package com.slyked.poojasamagri.fragments
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -7,14 +8,19 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout.HORIZONTAL
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.slyked.poojasamagri.adapter.BannerAdapter
 import com.slyked.poojasamagri.adapter.CategoryAdapter
+import com.slyked.poojasamagri.adapter.HomeProductListAdapter
 import com.slyked.poojasamagri.adapter.ProductAdapter
 import com.slyked.poojasamagri.databinding.FragmentHomeBinding
+import com.slyked.poojasamagri.ui.CategoryListActivity
+import com.slyked.poojasamagri.ui.SearchActivity
 import com.slyked.poojasamagri.ui.ViewAllProducts
 import com.slyked.poojasamagri.utils.CirclePagerIndicatorDecoration
 
@@ -22,7 +28,7 @@ import com.slyked.poojasamagri.utils.CirclePagerIndicatorDecoration
 class HomeFragment : Fragment() {
 
     lateinit var binding: FragmentHomeBinding
-    lateinit var product_adapter: ProductAdapter
+    lateinit var product_adapter: HomeProductListAdapter
     lateinit var categoryAdapter: CategoryAdapter
     lateinit var banner_adapter: BannerAdapter
     var position = -1
@@ -52,8 +58,18 @@ class HomeFragment : Fragment() {
             val intent = Intent(requireContext(),ViewAllProducts::class.java)
             startActivity(intent)
         }
+
+        binding.searchView.setOnClickListener {
+            val intent = Intent(requireContext(),SearchActivity::class.java)
+            startActivity(intent)
+        }
+        binding.viewAllCategoryTxt.setOnClickListener {
+            val intent = Intent(requireContext(),CategoryListActivity::class.java)
+            startActivity(intent)
+        }
     }
 
+    @SuppressLint("SuspiciousIndentation")
     private fun setAdBannerRecycler() {
 
         binding.adBanner.layoutManager = LinearLayoutManager(context,
@@ -83,8 +99,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun setProductRecycler() {
-        binding.productRecyclerView.layoutManager = GridLayoutManager(context,2)
-        product_adapter = ProductAdapter(requireContext())
+        binding.productRecyclerView.layoutManager = LinearLayoutManager(context,RecyclerView.HORIZONTAL,false)
+        product_adapter = HomeProductListAdapter(requireContext())
        // binding.productRecyclerView.setNestedScrollingEnabled(false);
         binding.productRecyclerView.adapter = product_adapter
     }

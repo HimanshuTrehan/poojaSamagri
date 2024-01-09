@@ -14,18 +14,18 @@ import com.slyked.poojasamagri.R
 import com.slyked.poojasamagri.ui.ProductDetailsActivity
 
 
-class ProductAdapter( context: Context): RecyclerView.Adapter<ProductAdapter.ViewHolder>()  {
+class HomeProductListAdapter(context: Context): RecyclerView.Adapter<HomeProductListAdapter.ViewHolder>()  {
 
     private val ctx: Context = context
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeProductListAdapter.ViewHolder {
 
-        val productView = LayoutInflater.from(parent.context).inflate(R.layout.single_product,parent,false)
+        val productView = LayoutInflater.from(parent.context).inflate(R.layout.product_row,parent,false)
         return ViewHolder(productView)
     }
 
 
-    override fun onBindViewHolder(holder: ProductAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: HomeProductListAdapter.ViewHolder, position: Int) {
 
         holder.quantity_layout.visibility = GONE
         holder.add_layout.setOnClickListener {
@@ -46,7 +46,7 @@ class ProductAdapter( context: Context): RecyclerView.Adapter<ProductAdapter.Vie
         return 10
     }
 
-     class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
+    class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
 
         val add_layout = itemView.findViewById<LinearLayout>(R.id.add_layout)
         val minus = itemView.findViewById<ImageView>(R.id.minus_quantity)

@@ -1,0 +1,16 @@
+[
+    {
+      "categoryName": "Marriage Items",
+      "type": "",
+      "subcategoryList": ["GARGIA MUNTHA","Clothes Items","Fancy Kobbari"]
+    },
+    {
+      "categoryName": "Daily Items",
+      "subcategoryList": ["Regular Pooja","Clothes","Agarbatti","Oils"]
+    },
+    {
+      "categoryName": "Brass Items",
+      "subcategoryList": ["Brass Deepalu","Brass Items"]
+    }
+  ]
+

@@ -10,7 +10,7 @@
     <string name="verify">Verify</string>
     <string name="didn_t_receive_an_otp">Didn\'t receive an OTP?</string>
     <string name="resend_otp">Resend OTP</string>
-    <string name="profile">Profile</string>
+    <string name="profile">My Profile</string>
     <string name="cart">Cart</string>
     <string name="categories">Categories</string>
     <string name="home">Home</string>
@@ -24,4 +24,9 @@
     <string name="my_cart">My Cart</string>
     <string name="checkout">Checkout</string>
     <string name="favourite">Favourite</string>
+    <string name="orders">Orders</string>
+    <string name="current">Current</string>
+    <string name="completed">Completed</string>
+    <string name="my_orders">My orders</string>
+    <string name="update">Update</string>
 </resources>

@@ -7,32 +7,34 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
-import com.slyked.poojasamagri.adapter.CategoryListAdapter
+import androidx.recyclerview.widget.RecyclerView.VERTICAL
+import com.slyked.poojasamagri.R
+import com.slyked.poojasamagri.adapter.OrderAdapter
 import com.slyked.poojasamagri.adapter.ProductAdapter
+import com.slyked.poojasamagri.databinding.FragmentCompletedOrderBinding
 import com.slyked.poojasamagri.databinding.FragmentFavouriteBinding
 
 
-class FavouriteFragment : Fragment() {
+class CompletedOrderFragment : Fragment() {
 
-    lateinit var binding: FragmentFavouriteBinding
-    lateinit var favouriteListAdapter: ProductAdapter
+    lateinit var binding: FragmentCompletedOrderBinding
+    lateinit var orderAdapter: OrderAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding  = FragmentFavouriteBinding.inflate(inflater,container,false)
+        binding = FragmentCompletedOrderBinding.inflate(layoutInflater,container,false)
 
         setCategoryRecycler()
-
         return binding.root
     }
 
     private fun setCategoryRecycler() {
-        binding.favRecyclerView.layoutManager = GridLayoutManager(context,2)
-        favouriteListAdapter = ProductAdapter(requireContext())
-        binding.favRecyclerView.adapter = favouriteListAdapter
+
+        binding.orderRecycler.layoutManager = LinearLayoutManager(context,VERTICAL,false)
+        orderAdapter = OrderAdapter(requireContext())
+        binding.orderRecycler.adapter = orderAdapter
 
     }
 

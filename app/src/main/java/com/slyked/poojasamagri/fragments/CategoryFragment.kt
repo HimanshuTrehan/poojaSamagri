@@ -8,31 +8,30 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
 import com.slyked.poojasamagri.adapter.CategoryListAdapter
-import com.slyked.poojasamagri.databinding.FragmentCategoryBinding
 
 
 class CategoryFragment : Fragment() {
 
-    lateinit var binding: FragmentCategoryBinding
-    lateinit var categoryListAdapter: CategoryListAdapter
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        binding  = FragmentCategoryBinding.inflate(inflater,container,false)
-
-        setCategoryRecycler()
-
-        return binding.root
-    }
-
-    private fun setCategoryRecycler() {
-        binding.favRecyclerView.layoutManager = LinearLayoutManager(context,VERTICAL,false)
-        categoryListAdapter = CategoryListAdapter(requireContext())
-        binding.favRecyclerView.adapter = categoryListAdapter
-
-    }
+//    lateinit var binding: FragmentCategoryBinding
+//    lateinit var categoryListAdapter: CategoryListAdapter
+//    override fun onCreateView(
+//        inflater: LayoutInflater, container: ViewGroup?,
+//        savedInstanceState: Bundle?
+//    ): View? {
+//        // Inflate the layout for this fragment
+//        binding  = FragmentCategoryBinding.inflate(inflater,container,false)
+//
+//        setCategoryRecycler()
+//
+//        return binding.root
+//    }
+//
+//    private fun setCategoryRecycler() {
+//        binding.favRecyclerView.layoutManager = LinearLayoutManager(context,VERTICAL,false)
+//        categoryListAdapter = CategoryListAdapter(requireContext())
+//        binding.favRecyclerView.adapter = categoryListAdapter
+//
+//    }
 
 
 }

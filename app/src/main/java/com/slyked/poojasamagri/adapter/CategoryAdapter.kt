@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.slyked.poojasamagri.R
 import com.slyked.poojasamagri.ui.ProductDetailsActivity
+import com.slyked.poojasamagri.ui.ViewAllProducts
 
 class CategoryAdapter(context: Context): RecyclerView.Adapter<CategoryAdapter.ViewHolder>()  {
 
@@ -47,7 +48,7 @@ class CategoryAdapter(context: Context): RecyclerView.Adapter<CategoryAdapter.Vi
     }
 
     private fun goDetailsPage() {
-        val intent = Intent(ctx , ProductDetailsActivity::class.java)
+        val intent = Intent(ctx , ViewAllProducts::class.java)
         intent.putExtra("ProductFrom", "New")
         ctx.startActivity(intent)
     }
