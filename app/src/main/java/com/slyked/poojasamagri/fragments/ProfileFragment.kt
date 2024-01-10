@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.slyked.poojasamagri.R
 import com.slyked.poojasamagri.databinding.FragmentProfileBinding
+import com.slyked.poojasamagri.ui.AddressDetailsActivity
 import com.slyked.poojasamagri.ui.OrderDetailsActivity
 
 
@@ -27,8 +28,11 @@ class ProfileFragment : Fragment() {
             val intent = Intent(requireContext(),OrderDetailsActivity::class.java)
             startActivity(intent)
         }
+        binding.addressLayout.setOnClickListener {
+            val intent = Intent(requireContext(),AddressDetailsActivity::class.java)
+            startActivity(intent)
+        }
         return binding.root
-
 
 
     }

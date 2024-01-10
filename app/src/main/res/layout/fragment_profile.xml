@@ -239,13 +239,56 @@
            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+
+                app:layout_constraintTop_toBottomOf="@id/orders_layout"
+                android:layout_marginTop="16dp"
+                android:id="@+id/address_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/address_img"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_location_outline"
+                    android:tint="@color/primary"
+                    />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_marginStart="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="My Address"
+                    android:textSize="16sp"
+                    android:textColor="@color/mainText"
+                    app:layout_constraintLeft_toRightOf="@id/address_img"
+                    app:layout_constraintTop_toTopOf="@id/address_img"
+                    app:layout_constraintBottom_toBottomOf="@id/address_img"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="24sp"
+                    android:layout_height="24sp"
+                    android:background="@drawable/circle_bg"
+                    android:src="@drawable/ic_forward"
+                    android:padding="5dp"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/contactUs_layout"
-                app:layout_constraintTop_toBottomOf="@id/orders_layout"
+                app:layout_constraintTop_toBottomOf="@id/address_layout"
                 android:layout_marginTop="16dp"
                 >
 

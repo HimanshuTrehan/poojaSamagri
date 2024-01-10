@@ -17,8 +17,6 @@
       app:layout_constraintTop_toTopOf="parent"
       android:id="@+id/header_layout">
 
-
-
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_marginVertical="10dp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -58,13 +56,184 @@
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintTop_toBottomOf="@id/header_layout">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/favRecyclerView"
-        android:layout_marginTop="10dp"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/header_layout"/>
+        android:layout_height="match_parent">
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+      <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/items_textView"
+          android:textColor="@color/mainText"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/metropolis_semibold"
+          android:textSize="20sp"
+          android:text="Items"/>
+
+      <androidx.recyclerview.widget.RecyclerView
+          android:id="@+id/itemsRecyclerView"
+          android:layout_marginTop="10dp"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:layout_constraintTop_toBottomOf="@id/items_textView"/>
+
+
+      <androidx.appcompat.widget.AppCompatTextView
+          android:textColor="@color/mainText"
+          android:layout_marginTop="16dp"
+          android:id="@+id/delivery_address_textView"
+          app:layout_constraintLeft_toLeftOf="parent"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/metropolis_semibold"
+          android:textSize="20sp"
+          android:text="Delivery Address"
+          app:layout_constraintTop_toBottomOf="@id/itemsRecyclerView"
+          />
+
+      <androidx.appcompat.widget.AppCompatTextView
+
+          android:textColor="@color/primary"
+          android:layout_marginTop="16dp"
+          android:id="@+id/edit_delivery_address_textView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/metropolis_semibold"
+          android:textSize="18sp"
+          android:text="Edit"
+          app:layout_constraintTop_toBottomOf="@id/itemsRecyclerView"
+          app:layout_constraintRight_toRightOf="parent"
+
+          />
+
+      <androidx.appcompat.widget.AppCompatTextView
+          android:textColor="@color/textAd"
+          android:layout_marginTop="16dp"
+          android:id="@+id/delivery_address"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/metropolis_m"
+          android:textSize="16sp"
+          android:text="HNo.24, Street no. 2,HSR layout, Bengaluru, 560041"
+          app:layout_constraintTop_toBottomOf="@id/edit_delivery_address_textView"
+          app:layout_constraintLeft_toLeftOf="parent"
+          />
+
+      <androidx.appcompat.widget.AppCompatTextView
+          android:layout_marginTop="16dp"
+          android:id="@+id/pricing_details_textView"
+          android:textColor="@color/mainText"
+          app:layout_constraintTop_toBottomOf="@id/delivery_address"
+          app:layout_constraintLeft_toLeftOf="parent"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/metropolis_semibold"
+          android:textSize="20sp"
+          android:text="Pricing Details"/>
+
+
+      <androidx.appcompat.widget.AppCompatTextView
+          android:textColor="@color/textAd"
+          android:layout_marginTop="16dp"
+          android:id="@+id/sub_total_label"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/metropolis_m"
+          android:textSize="14sp"
+          android:text="Sub Total :"
+          app:layout_constraintTop_toBottomOf="@id/pricing_details_textView"
+          app:layout_constraintLeft_toLeftOf="parent"
+          />
+      <androidx.appcompat.widget.AppCompatTextView
+          android:textColor="@color/mainText"
+          android:layout_marginTop="16dp"
+          android:id="@+id/sub_total"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/metropolis_semibold"
+          android:textSize="14sp"
+          android:text="\u20B9 400"
+          app:layout_constraintTop_toBottomOf="@id/pricing_details_textView"
+          app:layout_constraintRight_toRightOf="parent"
+          />
+
+      <androidx.appcompat.widget.AppCompatTextView
+          android:textColor="@color/textAd"
+          android:layout_marginTop="16dp"
+          android:id="@+id/delivery_fees_label"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/metropolis_m"
+          android:textSize="14sp"
+          android:text="Delivery Fees :"
+          app:layout_constraintTop_toBottomOf="@id/sub_total_label"
+          app:layout_constraintLeft_toLeftOf="parent"
+          />
+      <androidx.appcompat.widget.AppCompatTextView
+          android:textColor="@color/mainText"
+          android:layout_marginTop="16dp"
+          android:id="@+id/deliver_fees"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/metropolis_semibold"
+          android:textSize="14sp"
+          android:text="\u20B9 100"
+          app:layout_constraintTop_toBottomOf="@id/sub_total_label"
+          app:layout_constraintRight_toRightOf="parent"
+          />
+
+      <androidx.appcompat.widget.AppCompatTextView
+          android:textColor="@color/mainText"
+          android:layout_marginTop="16dp"
+          android:id="@+id/total_label"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/metropolis_semibold"
+          android:textSize="16sp"
+          android:text="Total :"
+          app:layout_constraintTop_toBottomOf="@id/delivery_fees_label"
+          app:layout_constraintLeft_toLeftOf="parent"
+          />
+      <androidx.appcompat.widget.AppCompatTextView
+          android:textColor="@color/mainText"
+          android:layout_marginTop="16dp"
+          android:id="@+id/total"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/metropolis_semibold"
+          android:textSize="16sp"
+          android:text="\u20B9 500"
+          app:layout_constraintTop_toBottomOf="@id/delivery_fees_label"
+          app:layout_constraintRight_toRightOf="parent"
+          />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </ScrollView>
   </com.google.android.material.card.MaterialCardView>
 
 
+  <com.google.android.material.button.MaterialButton
+      android:id="@+id/checkout"
+      app:cornerRadius="24dp"
+      android:layout_marginBottom="20dp"
+      android:layout_marginHorizontal="20dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      android:layout_width="match_parent"
+      android:layout_height="60dp"
+      android:text="Proceed To PAY"
+      android:textStyle="bold"
+      android:textColor="@color/white"
+      />
 </androidx.constraintlayout.widget.ConstraintLayout>
