@@ -7,8 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.slyked.poojasamagri.R
-import com.slyked.poojasamagri.ui.ProductDetailsActivity
-import com.slyked.poojasamagri.ui.ViewAllProducts
+import com.slyked.poojasamagri.products.ui.ViewAllProducts
 
 class OrderAdapter(context: Context): RecyclerView.Adapter<OrderAdapter.ViewHolder>()  {
 

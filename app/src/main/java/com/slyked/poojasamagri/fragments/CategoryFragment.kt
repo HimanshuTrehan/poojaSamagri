@@ -1,13 +1,6 @@
 package com.slyked.poojasamagri.fragments
 
-import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
-import com.slyked.poojasamagri.adapter.CategoryListAdapter
 
 
 class CategoryFragment : Fragment() {

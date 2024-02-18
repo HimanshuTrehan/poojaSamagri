@@ -287,8 +287,49 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/contactUs_layout"
+                android:id="@+id/change_theme_layout"
                 app:layout_constraintTop_toBottomOf="@id/address_layout"
+                android:layout_marginTop="16dp"
+                >
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/theme_img"
+                    app:layout_constraintLeft_toLeftOf="parent"
+
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_theme"
+                    android:tint="@color/primary"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_marginStart="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dark Theme"
+                    android:textSize="16sp"
+                    android:textColor="@color/mainText"
+                    app:layout_constraintLeft_toRightOf="@id/theme_img"
+                    app:layout_constraintTop_toTopOf="@id/theme_img"
+                    app:layout_constraintBottom_toBottomOf="@id/theme_img"/>
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/theme_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/contactUs_layout"
+                app:layout_constraintTop_toBottomOf="@id/change_theme_layout"
                 android:layout_marginTop="16dp"
                 >
 
@@ -308,29 +349,199 @@
                     android:layout_marginStart="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Help Center"
+                    android:text="Contact Us"
                     android:textSize="16sp"
                     android:textColor="@color/mainText"
                     app:layout_constraintLeft_toRightOf="@id/contact_img"
                     app:layout_constraintTop_toTopOf="@id/contact_img"
                     app:layout_constraintBottom_toBottomOf="@id/contact_img"/>
 
-<!--                <androidx.appcompat.widget.AppCompatImageView-->
-<!--                    android:layout_width="24sp"-->
-<!--                    android:layout_height="24sp"-->
-<!--                    android:background="@drawable/circle_bg"-->
-<!--                    android:src="@drawable/ic_forward"-->
-<!--                    android:padding="5dp"-->
-<!--                    app:layout_constraintRight_toRightOf="parent"-->
-<!--                    app:layout_constraintTop_toTopOf="parent"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent"/>-->
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:layout_width="24sp"
+                                    android:layout_height="24sp"
+                                    android:background="@drawable/circle_bg"
+                                    android:src="@drawable/ic_forward"
+                                    android:padding="5dp"
+                                    app:layout_constraintRight_toRightOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/aboutUs_layout"
+                app:layout_constraintTop_toBottomOf="@id/contactUs_layout"
+                android:layout_marginTop="16dp"
+                >
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/about_us_img"
+                    app:layout_constraintLeft_toLeftOf="parent"
+
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_about_us"
+                    android:tint="@color/primary"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_marginStart="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="About Us"
+                    android:textSize="16sp"
+                    android:textColor="@color/mainText"
+                    app:layout_constraintLeft_toRightOf="@id/about_us_img"
+                    app:layout_constraintTop_toTopOf="@id/about_us_img"
+                    app:layout_constraintBottom_toBottomOf="@id/about_us_img"/>
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:layout_width="24sp"
+                                    android:layout_height="24sp"
+                                    android:background="@drawable/circle_bg"
+                                    android:src="@drawable/ic_forward"
+                                    android:padding="5dp"
+                                    app:layout_constraintRight_toRightOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/faq_layout"
+                app:layout_constraintTop_toBottomOf="@id/aboutUs_layout"
+                android:layout_marginTop="16dp"
+                >
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/faq_img"
+                    app:layout_constraintLeft_toLeftOf="parent"
+
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_question"
+                    android:tint="@color/primary"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_marginStart="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="FAQ"
+                    android:textSize="16sp"
+                    android:textColor="@color/mainText"
+                    app:layout_constraintLeft_toRightOf="@id/faq_img"
+                    app:layout_constraintTop_toTopOf="@id/faq_img"
+                    app:layout_constraintBottom_toBottomOf="@id/faq_img"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="24sp"
+                    android:layout_height="24sp"
+                    android:background="@drawable/circle_bg"
+                    android:src="@drawable/ic_forward"
+                    android:padding="5dp"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/terms_and_condition_layout"
+                app:layout_constraintTop_toBottomOf="@id/faq_layout"
+                android:layout_marginTop="16dp"
+                >
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/term_img"
+                    app:layout_constraintLeft_toLeftOf="parent"
+
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_terms"
+                    android:tint="@color/primary"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_marginStart="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Terms \u0026 Conditions"
+                    android:textSize="16sp"
+                    android:textColor="@color/mainText"
+                    app:layout_constraintLeft_toRightOf="@id/term_img"
+                    app:layout_constraintTop_toTopOf="@id/term_img"
+                    app:layout_constraintBottom_toBottomOf="@id/term_img"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="24sp"
+                    android:layout_height="24sp"
+                    android:background="@drawable/circle_bg"
+                    android:src="@drawable/ic_forward"
+                    android:padding="5dp"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/policies_layout"
+                app:layout_constraintTop_toBottomOf="@id/terms_and_condition_layout"
+                android:layout_marginTop="16dp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/policies_img"
+                    app:layout_constraintLeft_toLeftOf="parent"
+
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_terms"
+                    android:tint="@color/primary"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_marginStart="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Policies"
+                    android:textSize="16sp"
+                    android:textColor="@color/mainText"
+                    app:layout_constraintLeft_toRightOf="@id/policies_img"
+                    app:layout_constraintTop_toTopOf="@id/policies_img"
+                    app:layout_constraintBottom_toBottomOf="@id/policies_img"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="24sp"
+                    android:layout_height="24sp"
+                    android:background="@drawable/circle_bg"
+                    android:src="@drawable/ic_forward"
+                    android:padding="5dp"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/logout_layout"
-                app:layout_constraintTop_toBottomOf="@id/contactUs_layout"
+                app:layout_constraintTop_toBottomOf="@id/policies_layout"
                 android:layout_marginTop="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

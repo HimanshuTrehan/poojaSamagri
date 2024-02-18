@@ -5,14 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.VERTICAL
-import com.slyked.poojasamagri.R
 import com.slyked.poojasamagri.adapter.OrderAdapter
-import com.slyked.poojasamagri.adapter.ProductAdapter
 import com.slyked.poojasamagri.databinding.FragmentCompletedOrderBinding
-import com.slyked.poojasamagri.databinding.FragmentFavouriteBinding
 
 
 class CompletedOrderFragment : Fragment() {

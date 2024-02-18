@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary"
-    tools:context=".ui.CategoryListActivity">
+    tools:context=".category.ui.CategoryListActivity">
 
 
   <androidx.constraintlayout.widget.ConstraintLayout
@@ -57,6 +57,25 @@
       android:background="@color/background"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintTop_toBottomOf="@id/header_layout">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:visibility="gone"
+        android:id="@+id/not_found"
+        android:textColor="@color/mainText"
+        android:textSize="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="No Category Found"/>
+
+    <ProgressBar
+        android:visibility="gone"
+        android:elevation="5dp"
+        android:layout_gravity="center"
+        android:id="@+id/progress_bar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"/>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/CategoriesListRecyclerView"

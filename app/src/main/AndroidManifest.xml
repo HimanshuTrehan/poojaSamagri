@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
+        android:name=".PoojaApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -15,7 +16,36 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PoojaSamagari"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.TermsAndConditionActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.FAQActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.AboutUsActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.ContactUsActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".ui.AddressDetailsActivity"
             android:exported="false">
@@ -48,14 +78,14 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.ProductDetailsActivity"
+            android:name=".products.ui.ProductDetailsActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.ViewAllProducts"
+            android:name=".products.ui.ViewAllProducts"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -87,12 +117,13 @@
         </activity>
         <activity android:name=".ui.LocationDetectionScreen" />
         <activity
-            android:name=".ui.CategoryListActivity"
+            android:name=".category.ui.CategoryListActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity android:name="com.slyked.poojasamagri.subcategory.ui.SubCategoryActivity" />
     </application>
 
 </manifest>

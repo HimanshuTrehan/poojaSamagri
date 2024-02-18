@@ -8,8 +8,8 @@ class SharedPreferencesManager {
 
 
     companion object {
-        lateinit var sharedPreferences: SharedPreferences
-        lateinit var editor: SharedPreferences.Editor
+      private  lateinit var sharedPreferences: SharedPreferences
+       private lateinit var editor: SharedPreferences.Editor
 
     fun putKey(context: Context, Key: String?, Value: String?) {
         sharedPreferences =

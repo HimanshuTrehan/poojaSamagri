@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.slyked.poojasamagri.adapter.CategoryListAdapter
 import com.slyked.poojasamagri.adapter.OrderSummaryItemAdapter
 import com.slyked.poojasamagri.databinding.ActivityOrderSummaryBinding
 

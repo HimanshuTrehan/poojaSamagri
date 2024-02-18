@@ -24,6 +24,7 @@
             android:layout_gravity="center">
 
             <ImageView
+                android:id="@+id/category_img"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:src="@drawable/pooja"
@@ -35,6 +36,7 @@
 
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/category_txt"
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -6,7 +6,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".ui.ProductDetailsActivity">
+    tools:context=".products.ui.ProductDetailsActivity">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:scaleType="fitXY"
+        android:elevation="20dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/animationView"
+        app:lottie_fileName="lottie.json"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"/>
 
 
    <androidx.appcompat.widget.AppCompatImageView
@@ -124,7 +138,21 @@
                 android:textColor="@color/mainText"
                 android:fontFamily="@font/metropolis_m"/>
 
+            <RadioGroup
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/description"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                android:id="@+id/radioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            </RadioGroup>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
 
     </ScrollView>
 
@@ -152,7 +180,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toRightOf="@id/minus_quantity"
-            android:id="@+id/quantity"
+            android:id="@+id/selectedQuantity"
             android:layout_marginHorizontal="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_width="wrap_content"
@@ -163,16 +191,16 @@
 
 
         <androidx.appcompat.widget.AppCompatImageView
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/quantity"
-            android:layout_marginHorizontal="10dp"
             android:id="@+id/add_quantity"
             android:layout_width="24dp"
             android:layout_height="24dp"
+            android:layout_marginHorizontal="10dp"
             android:background="@drawable/circle_bg"
+            android:padding="5dp"
             android:src="@drawable/ic_add"
-            android:padding="5dp"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/selectedQuantity"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <com.google.android.material.button.MaterialButton
@@ -193,6 +221,8 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 
 
