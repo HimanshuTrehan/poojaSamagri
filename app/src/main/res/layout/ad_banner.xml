@@ -7,14 +7,13 @@
 
 
     <androidx.appcompat.widget.AppCompatImageView
-
-        android:layout_marginEnd="10dp"
+        android:id="@+id/bannerImage"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:scaleType="centerInside"
+        android:scaleType="fitXY"
         android:adjustViewBounds="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="150dp"
         android:background="@drawable/image_circle_shape"
         android:src="@drawable/banner_img"/>
 

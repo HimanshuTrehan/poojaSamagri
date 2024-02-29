@@ -175,7 +175,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:visibility="gone"
         android:id="@+id/add_layout"
         android:gravity="center"
         app:layout_constraintRight_toRightOf="parent"

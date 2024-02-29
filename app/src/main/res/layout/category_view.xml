@@ -1,46 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:background="@color/background"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:layout_marginStart="10dp"
-        android:id="@+id/category_image"
-        android:layout_marginEnd="10dp"
-        android:layout_width="match_parent"
-        android:scaleType="fitXY"
-        android:layout_height="150dp"
-        android:src="@drawable/agarbati1"
+
+    <com.google.android.material.imageview.ShapeableImageView
+        app:shapeAppearanceOverlay="@style/roundedImageView"
+        android:background="@drawable/rounded_corners"
+        android:layout_marginTop="10dp"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-     />
+        android:layout_gravity="center"
+        android:id="@+id/category_image"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@drawable/pooja"
+        android:scaleType="fitXY"/>
+
+
+
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:layout_marginTop="10dp"
+        android:maxLines="2"
+        android:textAlignment="center"
         android:id="@+id/name_txt"
-        android:layout_marginStart="20dp"
-        android:layout_width="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:text="Daily Pooja Samagri"
-        android:fontFamily="@font/metropolis_semibold"
-        android:textSize="18sp"
-        android:textColor="@color/mainText"
         app:layout_constraintTop_toBottomOf="@id/category_image"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="@id/category_image"
-        app:layout_constraintRight_toRightOf="@id/category_image"
-        />
-
-
-
-
-
-
-
-
-
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:textColor="@color/mainText"
+        android:text="Daily Need dsaa"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

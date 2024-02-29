@@ -146,7 +146,7 @@ class CategoryListActivity : AppCompatActivity(), CategoryListAdapter.ItemOperat
 
 
     private fun setCategoryRecycler() {
-        binding.CategoriesListRecyclerView.layoutManager = GridLayoutManager(applicationContext,2)
+        binding.CategoriesListRecyclerView.layoutManager = GridLayoutManager(applicationContext,4)
         categoryListAdapter = CategoryListAdapter(applicationContext,this)
         binding.CategoriesListRecyclerView.adapter = categoryListAdapter
 
@@ -157,19 +157,19 @@ class CategoryListActivity : AppCompatActivity(), CategoryListAdapter.ItemOperat
         CoroutineScope(Dispatchers.IO).launch {
         val response = async{   subCategoryViewModel.checkSubCategoryById(id)}
 
-            if (response.await() != null && response.await()!!.isNotEmpty()){
-                runOnUiThread {
-                    binding.progressBar.visibility = GONE
-                    openSubcategory(id)
-                }
-
-            }else{
+//            if (response.await() != null && response.await()!!.isNotEmpty()){
+//                runOnUiThread {
+//                    binding.progressBar.visibility = GONE
+//                    openSubcategory(id)
+//                }
+//
+//            }else{
                 runOnUiThread{
                     binding.progressBar.visibility = GONE
                     openViewProductByCategoryId(id)
                 }
 
-            }
+         //   }
         }
 
 

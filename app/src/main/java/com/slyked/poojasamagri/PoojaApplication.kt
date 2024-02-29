@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 import com.slyked.poojasamagri.utils.manager.SharedPreferencesManager
 import dagger.hilt.android.HiltAndroidApp
+import java.io.File
 
 @HiltAndroidApp
 class PoojaApplication:Application() {
@@ -18,6 +19,10 @@ class PoojaApplication:Application() {
         }else{
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
+
+        val dexOutputDir: File = codeCacheDir
+        dexOutputDir.setReadOnly()
+
     }
 
 

@@ -1,50 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginEnd="10dp"
+    android:layout_marginTop="10dp"
+    android:background="@color/background"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/profile_img"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        app:cardCornerRadius="250dp"
-        app:cardBackgroundColor="@color/white">
 
-        <androidx.cardview.widget.CardView
-            android:elevation="10dp"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            app:cardCornerRadius="250dp"
-            android:layout_gravity="center">
-
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
+                app:shapeAppearanceOverlay="@style/roundedImageView"
+                android:background="@drawable/rounded_corners"
+                android:layout_marginTop="10dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_gravity="center"
                 android:id="@+id/category_img"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:src="@drawable/pooja"
-                android:scaleType="centerCrop"/>
+                android:scaleType="fitXY"/>
 
-        </androidx.cardview.widget.CardView>
 
-    </androidx.cardview.widget.CardView>
 
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:maxLines="2"
+        android:textAlignment="center"
         android:id="@+id/category_txt"
         android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/profile_img"
+        app:layout_constraintTop_toBottomOf="@id/category_img"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:fontFamily="@font/metropolis_m"
         android:textColor="@color/mainText"
-        android:text="Daily Need"/>
+        android:text="Daily Need dsaa"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

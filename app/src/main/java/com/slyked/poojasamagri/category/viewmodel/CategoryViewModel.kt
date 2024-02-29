@@ -31,12 +31,24 @@ class CategoryViewModel(private val repository: CategoryRepository):ViewModel() 
         pageSize = 20,
         maxSize = 100
     )
+    val allCategoriesLiveData: LiveData<ResponseData<CategoryListData>>
+        get()= repository.allCategoriesLiveData
 
 
 
     val getCategory: Flow<PagingData<com.slyked.admin.category.model.Category>> = Pager(config = pagingConfig) {
         CategoryPagingSource(categoryRepository = repository)
     }.flow.cachedIn(viewModelScope)
+
+
+    fun getHomeCategory()
+    {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.getAllCategories()
+        }
+
+    }
+
 
 
 

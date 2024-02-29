@@ -1,5 +1,6 @@
 package com.slyked.poojasamagri.ui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -13,24 +14,34 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.slyked.admin.api.ProductServices
 import com.slyked.admin.api.ResponseData
 import com.slyked.admin.api.RetrofitHelper
+import com.slyked.admin.product.model.CartProduct
+import com.slyked.admin.product.model.FavouriteProduct
 import com.slyked.admin.product.model.Product
+import com.slyked.admin.product.model.ProductsVariant
 import com.slyked.admin.product.repository.ProductRepository
 import com.slyked.admin.product.viewmodel.ProductViewModel
 import com.slyked.admin.product.viewmodelfactory.ProductViewModelFactory
 import com.slyked.poojasamagri.products.adapter.ProductAdapter
 import com.slyked.poojasamagri.databinding.ActivitySearchBinding
+import com.slyked.poojasamagri.products.dao.CartProductDao
 import com.slyked.poojasamagri.products.dao.FavouriteProductDao
+import com.slyked.poojasamagri.products.ui.ProductDetailsActivity
+import com.slyked.poojasamagri.utils.ProductVariantsSheet
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SearchActivity : AppCompatActivity(),ProductAdapter.ProductListener {
+class SearchActivity : AppCompatActivity(),ProductAdapter.ProductListener,ProductVariantsSheet.BottomSheetListeners {
     lateinit var binding: ActivitySearchBinding
     lateinit var productAdapter: ProductAdapter
     lateinit var productViewModel: ProductViewModel
-    var productList : List<Product> = arrayListOf()
+    var productList : List<Product?> = arrayListOf()
+    @Inject
+    lateinit var  cartDao: CartProductDao
     @Inject
     lateinit var  favouriteProductDao: FavouriteProductDao
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -164,17 +175,122 @@ class SearchActivity : AppCompatActivity(),ProductAdapter.ProductListener {
             // If you don't want to call all the time, you
             // can filter on changes in combinedLoadStates
             println("Recycler addLoadStateListener " + productAdapter.itemCount)
+            if (productAdapter.itemCount == 0)
+            {
+                binding.notFound.visibility = View.VISIBLE
+            }else{
+                binding.notFound.visibility = View.GONE
 
+            }
+            if (productAdapter.itemCount>0) {
+
+                productList = productAdapter.snapshot().toList()
+            }
             // shopViewModel.setItemAmount(shopListAdapter.itemCount)
         }
 
     }
 
+
     override fun addToFavourite(id: Int) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val product = getFavouriteProductFromId(id)
+            if (product !=null) {
+                if (favouriteProductDao.isItemExist(id.toString())) {
+
+                    favouriteProductDao.deleteFavouriteProduct(id)
+
+
+                }else{
+                    favouriteProductDao.addFavouriteProduct(product)
+
+
+                }
+                runOnUiThread {
+                    productAdapter.notifyDataSetChanged()
+                }
+            }
+        }
+    }
+
+    private fun getFavouriteProductFromId(id: Int): FavouriteProduct? {
+        for(products in productList)
+        {
+            if (products?.id == id)
+            {
+                return FavouriteProduct(id,products.ProductsVariants!!,products.description,products.image, name =products.name,products.out_of_stock )
+            }
+        }
+        return null
+    }
+    private fun getProductFromId(id: Int): Product? {
+        for(products in productList)
+        {
+            if (products?.id == id)
+            {
+                return products
+            }
+        }
+        return null
+    }
+
+
+    override fun onClick(id: Int) {
+        openProductDetailsPage(id)
+    }
+
+    override fun openVariants(id: Int) {
+        openBottomSheet(id)
+    }
+
+    private fun openBottomSheet(id:Int) {
+        var product = getProductFromId(id)
+        ProductVariantsSheet(this,product!!,this).showDialog()
 
     }
 
-    override fun onClick(id: Int) {
+    private fun openProductDetailsPage(id:Int) {
+        val intent = Intent(applicationContext , ProductDetailsActivity::class.java)
+        intent.putExtra("productId", id);
+        startActivity(intent)
+    }
 
+
+
+    override fun addToCart(productData: Product, data: MutableMap<Int, Int>) {
+        CoroutineScope(Dispatchers.IO).launch {
+
+
+            var cartList = arrayListOf<CartProduct>()
+            for (variants in data) {
+                var variant = getVariantFromId(variants.key, productData)
+                cartList.add(
+                    CartProduct(
+                        productId = productData.id,
+                        description = productData.description,
+                        variant = variant,
+                        image = productData.image,
+                        quantity = variants.value,
+                        name = productData.name
+                    )
+                )
+            }
+            cartDao.addToCartProductList(cartList)
+        }
+    }
+
+    private fun getVariantFromId(key: Int, productData: Product): ProductsVariant? {
+
+        var listVariants = productData.ProductsVariants
+
+        if (listVariants != null) {
+            for (data in listVariants){
+                if (data.id == key)
+                {
+                    return data
+                }
+            }
+        }
+        return null
     }
 }

@@ -10,40 +10,46 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.slyked.admin.api.CategoryServices
-import com.slyked.admin.api.ProductServices
-import com.slyked.admin.api.ResponseData
-import com.slyked.admin.api.RetrofitHelper
+import com.slyked.admin.api.*
 import com.slyked.admin.category.model.Category
 import com.slyked.admin.category.repository.CategoryRepository
 import com.slyked.admin.category.viewmodel.CategoryViewModel
 import com.slyked.admin.category.viewmodelfactory.CategoryViewModelFactory
+import com.slyked.admin.configuration.model.Banner
+import com.slyked.admin.configuration.repository.ConfigurationRepository
+import com.slyked.admin.configuration.viewmodel.ConfigurationViewModel
+import com.slyked.admin.configuration.viewmodelfactory.ConfigurationViewModelFactory
+import com.slyked.admin.product.model.CartProduct
 import com.slyked.admin.product.model.FavouriteProduct
 import com.slyked.admin.product.model.Product
+import com.slyked.admin.product.model.ProductsVariant
 import com.slyked.admin.product.repository.ProductRepository
 import com.slyked.admin.product.viewmodel.ProductViewModel
 import com.slyked.admin.product.viewmodelfactory.ProductViewModelFactory
-import com.slyked.poojasamagri.PoojaApplication
+import com.slyked.poojasamagri.AppConfiguration
 import com.slyked.poojasamagri.adapter.BannerAdapter
 import com.slyked.poojasamagri.category.adapter.CategoryAdapter
-import com.slyked.poojasamagri.products.adapter.HomeProductListAdapter
-import com.slyked.poojasamagri.databinding.FragmentHomeBinding
 import com.slyked.poojasamagri.category.ui.CategoryListActivity
-import com.slyked.poojasamagri.db.AppDataBase
+import com.slyked.poojasamagri.databinding.FragmentHomeBinding
+import com.slyked.poojasamagri.products.adapter.HomeProductListAdapter
+import com.slyked.poojasamagri.products.adapter.ProductAdapter
+import com.slyked.poojasamagri.products.dao.CartProductDao
 import com.slyked.poojasamagri.products.dao.FavouriteProductDao
 import com.slyked.poojasamagri.products.ui.ProductDetailsActivity
-import com.slyked.poojasamagri.ui.SearchActivity
 import com.slyked.poojasamagri.products.ui.ViewAllProducts
+import com.slyked.poojasamagri.ui.NotificationActivity
+import com.slyked.poojasamagri.ui.SearchActivity
 import com.slyked.poojasamagri.utils.CirclePagerIndicatorDecoration
-import dagger.hilt.EntryPoint
-import dagger.hilt.InstallIn
+import com.slyked.poojasamagri.utils.ProductVariantsSheet
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -51,19 +57,24 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
 @AndroidEntryPoint
-class HomeFragment : Fragment(),HomeProductListAdapter.ProductListener {
+class HomeFragment : Fragment(), ProductAdapter.ProductListener,ProductVariantsSheet.BottomSheetListeners {
 
     lateinit var binding: FragmentHomeBinding
-    lateinit var product_adapter: HomeProductListAdapter
+    lateinit var product_adapter: ProductAdapter
     lateinit var categoryAdapter: CategoryAdapter
     lateinit var banner_adapter: BannerAdapter
-    lateinit var productViewModel:ProductViewModel
-    lateinit var categoryViewModel:CategoryViewModel
-    var productList : List<Product?> = arrayListOf()
-     var categoryItems: List<Category?> = arrayListOf()
+    lateinit var productViewModel: ProductViewModel
+    lateinit var categoryViewModel: CategoryViewModel
+    lateinit var configurationViewModel: ConfigurationViewModel
+    var productList: List<Product?> = arrayListOf()
+    var categoryItems: List<Category?> = arrayListOf()
+    var bannerItems: List<Banner?> = arrayListOf()
     @Inject
-   lateinit var  favouriteProductDao:FavouriteProductDao
+    lateinit var  cartDao: CartProductDao
+    @Inject
+    lateinit var favouriteProductDao: FavouriteProductDao
     var position = -1
 
     init {
@@ -72,7 +83,7 @@ class HomeFragment : Fragment(),HomeProductListAdapter.ProductListener {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-       println("Lifecycle onAttach")
+        println("Lifecycle onAttach")
 
     }
 
@@ -83,10 +94,12 @@ class HomeFragment : Fragment(),HomeProductListAdapter.ProductListener {
 
         setupViewModels()
 
-      //  getProductData()
-       // getCategoryData()
-      //  setCategoryRecycler()
+
+        //  getProductData()
+        // getCategoryData()
+        //  setCategoryRecycler()
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -94,12 +107,11 @@ class HomeFragment : Fragment(),HomeProductListAdapter.ProductListener {
         println("Lifecycle onCreateView")
 
         // Inflate the layout for this fragment
-        binding = FragmentHomeBinding.inflate(inflater,container,false);
-     //   setCategoryRecycler()
-        setAdBannerRecycler()
-       // setProductRecycler()
-        setClickListeners()
+        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        //   setCategoryRecycler()
 
+        // setProductRecycler()
+        setClickListeners()
         return binding.root;
 
     }
@@ -109,31 +121,64 @@ class HomeFragment : Fragment(),HomeProductListAdapter.ProductListener {
         println("Lifecycle onResume")
         getProductData()
         getCategoryData()
+        getBannerData()
 
     }
 
+    private fun getBannerData() {
+        configurationViewModel.getBannerList()
+
+        configurationViewModel.bannerLiveData.observe(this){
+            when(it)
+            {
+                is ResponseData.Loading ->{
+
+                }
+                is ResponseData.Successful ->{
+                    if (it.data?.banners?.size!! > 0)
+                    {
+                        bannerItems = it.data.banners
+                        setAdBannerRecycler()
+                    }
+                }
+                is ResponseData.Error ->{
+
+                }
+            }
+        }
+    }
 
 
     private fun getCategoryData() {
-        setCategoryRecycler()
-        lifecycleScope.launch {
-            categoryViewModel.getCategory.collectLatest {
-                categoryAdapter.submitData(lifecycle,it)
+
+        categoryViewModel.getHomeCategory()
+
+        categoryViewModel.allCategoriesLiveData.observe(this){
+            when(it)
+            {
+                is ResponseData.Loading ->{
+                  //  binding.p.visibility = VISIBLE
+                }
+                is ResponseData.Successful -> {
+                 //   binding.progressBar.visibility = GONE
+                    if (it.data?.categories?.size!! > 0)
+                    {
+                        println("Category Size " + it.data.categories.size)
+                        categoryItems = it.data.categories
+                        setCategoryRecycler()
+                        dismissLottieView()
+
+                    }
+
+
+                }
+                is ResponseData.Error ->{
+                  //  binding.progressBar.visibility = GONE
+
+                }
             }
         }
 
-        categoryAdapter.addLoadStateListener { combinedLoadStates ->
-            // If you don't want to call all the time, you
-            // can filter on changes in combinedLoadStates
-            println("Recycler addLoadStateListener " + categoryAdapter.itemCount)
-            if (categoryAdapter.itemCount>0) {
-
-                categoryItems = categoryAdapter.snapshot().toList()
-              //  dismissLottieView()
-            }
-
-            // shopViewModel.setItemAmount(shopListAdapter.itemCount)
-        }
 
 
 
@@ -154,9 +199,9 @@ class HomeFragment : Fragment(),HomeProductListAdapter.ProductListener {
             // If you don't want to call all the time, you
             // can filter on changes in combinedLoadStates
             println("Recycler addLoadStateListener " + product_adapter.itemCount)
-            if (product_adapter.itemCount>0) {
+            if (product_adapter.itemCount > 0) {
 
-              productList = product_adapter.snapshot().toList()
+                productList = product_adapter.snapshot().toList()
                 dismissLottieView()
             }
 
@@ -174,12 +219,12 @@ class HomeFragment : Fragment(),HomeProductListAdapter.ProductListener {
 
 
         lifecycleScope.launch {
-            product_adapter.loadStateFlow.collect{
+            product_adapter.loadStateFlow.collect {
                 val state = it.refresh
-                if(state is LoadState.Loading){
-                 //   binding.progressBar.visibility = View.VISIBLE
-                }else{
-                //    binding.progressBar.visibility = View.GONE
+                if (state is LoadState.Loading) {
+                    //   binding.progressBar.visibility = View.VISIBLE
+                } else {
+                    //    binding.progressBar.visibility = View.GONE
 
                 }
 
@@ -216,42 +261,67 @@ class HomeFragment : Fragment(),HomeProductListAdapter.ProductListener {
 //                    }
 //                }
 //            }
-        }
+    }
 
     private fun dismissLottieView() {
         binding.animationView.cancelAnimation()
-        binding.animationView.visibility =GONE
+        binding.animationView.visibility = GONE
     }
 
 
     private fun setupViewModels() {
+
+        val configurationService = RetrofitHelper.getInstance().create(ConfigurationServices::class.java)
+        val configurationRepository = ConfigurationRepository(configurationService)
+        configurationViewModel = ViewModelProvider(
+            this,
+            ConfigurationViewModelFactory(configurationRepository)
+        )[ConfigurationViewModel::class.java]
+
         val productService = RetrofitHelper.getInstance().create(ProductServices::class.java)
         val productRepository = ProductRepository(productService)
-        productViewModel = ViewModelProvider(this,ProductViewModelFactory(productRepository))[ProductViewModel::class.java]
+        productViewModel = ViewModelProvider(
+            this,
+            ProductViewModelFactory(productRepository)
+        )[ProductViewModel::class.java]
 
         val categoryService = RetrofitHelper.getInstance().create(CategoryServices::class.java)
         val categoryRepository = CategoryRepository(categoryService)
-        categoryViewModel = ViewModelProvider(this,CategoryViewModelFactory(categoryRepository))[CategoryViewModel::class.java]
+        categoryViewModel = ViewModelProvider(
+            this,
+            CategoryViewModelFactory(categoryRepository)
+        )[CategoryViewModel::class.java]
     }
-
-
 
 
     private fun setCategoryRecycler() {
-        binding.categoryRecycler.layoutManager = LinearLayoutManager(context,
-            LinearLayoutManager.HORIZONTAL, false)
-        categoryAdapter = CategoryAdapter(requireContext(),categoryItems)
+        binding.categoryRecycler.layoutManager = GridLayoutManager(
+            context,
+            4
+        )
+        categoryAdapter = CategoryAdapter(requireContext(), categoryItems)
         binding.categoryRecycler.adapter = categoryAdapter
     }
 
+
     private fun setClickListeners() {
+
+        binding.whatsapp.setOnClickListener {
+            openWhatsApp()
+        }
+
+        binding.notification.setOnClickListener {
+            val intent = Intent(requireContext(), NotificationActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.viewAllProductTxt.setOnClickListener {
             val intent = Intent(requireContext(), ViewAllProducts::class.java)
             startActivity(intent)
         }
 
         binding.searchView.setOnClickListener {
-            val intent = Intent(requireContext(),SearchActivity::class.java)
+            val intent = Intent(requireContext(), SearchActivity::class.java)
             startActivity(intent)
         }
         binding.viewAllCategoryTxt.setOnClickListener {
@@ -263,21 +333,23 @@ class HomeFragment : Fragment(),HomeProductListAdapter.ProductListener {
     @SuppressLint("SuspiciousIndentation")
     private fun setAdBannerRecycler() {
 
-        binding.adBanner.layoutManager = LinearLayoutManager(context,
-            LinearLayoutManager.HORIZONTAL, false)
+        binding.adBanner.layoutManager = LinearLayoutManager(
+            context,
+            LinearLayoutManager.HORIZONTAL, false
+        )
         //        recyclerView.setOnFlingListener(null);
-      //  if (contentList.size > 1) {
-            binding.adBanner.addItemDecoration(CirclePagerIndicatorDecoration())
-       // }
+        //  if (contentList.size > 1) {
+        binding.adBanner.addItemDecoration(CirclePagerIndicatorDecoration())
+        // }
         binding.adBanner.setItemAnimator(DefaultItemAnimator())
-        banner_adapter = BannerAdapter(requireContext())
+        banner_adapter = BannerAdapter(requireContext(),bannerItems)
         binding.adBanner.adapter = banner_adapter
         val mHandler = Handler(Looper.getMainLooper())
         val SCROLLING_RUNNABLE: Runnable = object : Runnable {
             override fun run() {
                 position++
-                if (position < 4 )//contentList.size)
-                     {
+                if (position < 4)//contentList.size)
+                {
                     binding.adBanner.smoothScrollToPosition(position)
                 } else if (position == 4) {
                     position = 0
@@ -289,23 +361,74 @@ class HomeFragment : Fragment(),HomeProductListAdapter.ProductListener {
         mHandler.postDelayed(SCROLLING_RUNNABLE, 1000)
     }
 
+    private fun openWhatsApp() {
+        try {
+            var whatsappUser = AppConfiguration.whatsapp_number
+            whatsappUser = whatsappUser.replace("+", "").replace(" ", "")
+            val sendIntent = Intent("android.intent.action.MAIN")
+            sendIntent.putExtra("jid", "$whatsappUser@s.whatsapp.net")
+            sendIntent.putExtra(Intent.EXTRA_TEXT, "hi")
+            sendIntent.action = Intent.ACTION_SEND
+            sendIntent.setPackage("com.whatsapp")
+            sendIntent.type = "text/plain"
+
+            startActivity(sendIntent)
+        }catch (e:Exception){
+            Toast.makeText(context, "Please try Agaain.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+
+/*
+    private fun sendToWhatsapp() {
+        //    progressDialog.dismiss();
+        try{
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "text/plain"
+            intent.setPackage("com.whatsapp")
+
+            // Add the phone number and message to the Intent
+            intent.putExtra("jid", "+919646793185"+  "@s.whatsapp.net")
+            intent.putExtra(Intent.EXTRA_TEXT, "j")
+
+            // Verify that the WhatsApp app is installed before starting the activity
+//            if (intent.resolveActivity(requireContext().packageManager) != null) {
+//                requireActivity().startActivity(intent)
+//            } else {
+//                // If WhatsApp is not installed, show a toast message
+//                Toast.makeText(context, "WhatsApp is not installed on this device.", Toast.LENGTH_SHORT).show()
+//            }
+//        val intent = Intent()
+//        intent.setPackage("com.whatsapp")
+//        intent.action = Intent.ACTION_SEND_MULTIPLE
+//        intent.putExtra(Intent.EXTRA_TEXT, "")
+//        intent.type = "text/plain"
+        requireActivity().startActivity(Intent.createChooser(intent, "share Image"))
+    }catch (e:Exception){
+
+        }
+    }
+*/
+
+
     private fun setProductRecycler() {
-        binding.productRecyclerView.layoutManager = LinearLayoutManager(context,RecyclerView.HORIZONTAL,false)
-        product_adapter = HomeProductListAdapter(requireContext(),favouriteProductDao,this)
-       // binding.productRecyclerView.setNestedScrollingEnabled(false);
+        binding.productRecyclerView.layoutManager =
+            GridLayoutManager(context, 2)
+        product_adapter = ProductAdapter(requireContext(), favouriteProductDao, this)
+        // binding.productRecyclerView.setNestedScrollingEnabled(false);
         binding.productRecyclerView.adapter = product_adapter
     }
 
     override fun addToFavourite(id: Int) {
 
         CoroutineScope(Dispatchers.IO).launch {
-            val product = getProductFromId(id)
-            if (product !=null) {
+            val product = getFavouriteProductFromId(id)
+            if (product != null) {
                 if (favouriteProductDao.isItemExist(id.toString())) {
 
                     favouriteProductDao.deleteFavouriteProduct(id)
 
-                }else{
+                } else {
                     favouriteProductDao.addFavouriteProduct(product)
 
                 }
@@ -316,23 +439,83 @@ class HomeFragment : Fragment(),HomeProductListAdapter.ProductListener {
             }
         }
     }
-
-    private fun getProductFromId(id: Int): FavouriteProduct? {
+    private fun getProductFromId(id: Int): Product? {
         for(products in productList)
         {
             if (products?.id == id)
             {
-                return FavouriteProduct(id,products.ProductsVariants!!,products.description,products.image, name =products.name,products.out_of_stock )
+                return products
+            }
+        }
+        return null
+    }
+
+    private fun getFavouriteProductFromId(id: Int): FavouriteProduct? {
+        for (products in productList) {
+            if (products?.id == id) {
+                return FavouriteProduct(
+                    id,
+                    products.ProductsVariants!!,
+                    products.description,
+                    products.image,
+                    name = products.name,
+                    products.out_of_stock
+                )
             }
         }
         return null
     }
 
     override fun onClick(id: Int) {
-        val intent = Intent(requireContext() , ProductDetailsActivity::class.java)
+        val intent = Intent(requireContext(), ProductDetailsActivity::class.java)
         intent.putExtra("productId", id)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         requireContext().startActivity(intent)
+    }
+
+    override fun openVariants(id: Int) {
+        openBottomSheet(id)
+    }
+
+    private fun openBottomSheet(id:Int) {
+        var product = getProductFromId(id)
+        ProductVariantsSheet(requireActivity(),product!!,this).showDialog()
+
+    }
+
+    override fun addToCart(productData: Product, data: MutableMap<Int, Int>) {
+        CoroutineScope(Dispatchers.IO).launch {
+            var cartList = arrayListOf<CartProduct>()
+            for (variants in data) {
+                var variant = getVariantFromId(variants.key, productData)
+                cartList.add(
+                    CartProduct(
+                        productId = productData.id,
+                        description = productData.description,
+                        variant = variant,
+                        image = productData.image,
+                        quantity = variants.value,
+                        name = productData.name
+                    )
+                )
+            }
+            cartDao.addToCartProductList(cartList)
+        }
+    }
+
+    private fun getVariantFromId(key: Int, productData: Product): ProductsVariant? {
+
+        var listVariants = productData.ProductsVariants
+
+        if (listVariants != null) {
+            for (data in listVariants){
+                if (data.id == key)
+                {
+                    return data
+                }
+            }
+        }
+        return null
     }
 
 

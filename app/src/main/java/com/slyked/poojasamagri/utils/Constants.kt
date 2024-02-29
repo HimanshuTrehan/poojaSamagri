@@ -15,6 +15,7 @@ companion object
      const val BASE_URL = "https://api2.slyked.com"
      const val IMAGE_BASE_URL = "https://pooja-samagari.s3.eu-north-1.amazonaws.com/"
 
+
 }
 
 

@@ -14,6 +14,8 @@ interface CartProductDao {
     @Insert
     suspend fun addToCartProduct(productModel: CartProduct):Long
 
+    @Insert
+    suspend fun addToCartProductList(productModel: List<CartProduct>)
 
     @Query("SELECT * FROM CartTable")
    suspend fun getCartProducts(): List<CartProduct>

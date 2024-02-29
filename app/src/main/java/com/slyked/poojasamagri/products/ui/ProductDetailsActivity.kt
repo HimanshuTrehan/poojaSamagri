@@ -11,6 +11,8 @@ import android.view.View.GONE
 import android.view.WindowManager
 import android.widget.RadioButton
 import androidx.annotation.RequiresApi
+import androidx.core.view.children
+import androidx.core.view.marginBottom
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
@@ -29,6 +31,7 @@ import com.slyked.poojasamagri.cart.CartViewModel
 import com.slyked.poojasamagri.databinding.ActivityProductDetailsBinding
 import com.slyked.poojasamagri.products.dao.CartProductDao
 import com.slyked.poojasamagri.utils.Constants
+import com.slyked.poojasamagri.utils.ProductVariantsSheet
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -36,7 +39,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 @AndroidEntryPoint
-class ProductDetailsActivity : AppCompatActivity() {
+class ProductDetailsActivity : AppCompatActivity(), ProductVariantsSheet.BottomSheetListeners  {
     lateinit var binding: ActivityProductDetailsBinding
     lateinit var productViewModel: ProductViewModel
     lateinit var cartViewModel: CartViewModel
@@ -46,6 +49,7 @@ class ProductDetailsActivity : AppCompatActivity() {
     var variantIndex =0
     var price = ""
     var quantity = ""
+
     @Inject
     lateinit var cartProductDao: CartProductDao
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,6 +64,10 @@ class ProductDetailsActivity : AppCompatActivity() {
 
         binding.back.setOnClickListener {
             finish()
+        }
+
+        binding.variantEditText.setOnClickListener {
+            openBottomSheet()
         }
 
         setSelectedQuantity(cartViewModel.getSelectedQuantity().toString())
@@ -77,36 +85,44 @@ class ProductDetailsActivity : AppCompatActivity() {
         }
         binding.addToCartBtn.setOnClickListener {
             productData?.let {
-                val selectedQuantity = cartViewModel.getSelectedQuantity()
-                val cartItem = CartProduct(it.id,
-                    productVariantList?.get(variantIndex)!!,it.description,it.image,it.name,selectedQuantity)
-                CoroutineScope(Dispatchers.IO).launch {
-                    if (!cartProductDao.isItemExist(it.id.toString())) {
-                        val response = async { cartProductDao.addToCartProduct(cartItem) }
-                        println("addCart "+response.await())
-                        if (response.await() > 0) {
-                            runOnUiThread {
-                                updateAddToCart()
-                            }
-                        }
-
-                    }else{
-                        val response = async { cartProductDao.deleteCartProduct(it.id) }
-                        if (response.await() == 1) {
-                            runOnUiThread {
-                                removeFromCart()
-                            }
-                        }
-                    }
-                }
+                openBottomSheet()
+//                val selectedQuantity = cartViewModel.getSelectedQuantity()
+//                val cartItem = CartProduct(productId = it.id,
+//                    variant = productVariantList?.get(variantIndex)!!, description = it.description,image = it.image, name = it.name, quantity = selectedQuantity)
+//                CoroutineScope(Dispatchers.IO).launch {
+//                    if (!cartProductDao.isItemExist(it.id.toString())) {
+//                        val response = async { cartProductDao.addToCartProduct(cartItem) }
+//                        println("addCart "+response.await())
+//                        if (response.await() > 0) {
+//                            runOnUiThread {
+//                                updateAddToCart()
+//                            }
+//                        }
+//
+//                    }else{
+//                        val response = async { cartProductDao.deleteCartProduct(it.id) }
+//                        if (response.await() == 1) {
+//                            runOnUiThread {
+//                                removeFromCart()
+//                            }
+//                        }
+//                    }
+//                }
             }
 
         }
 
 
+
+
+
     }
 
+    private fun openBottomSheet() {
+        var product = productData
+        ProductVariantsSheet(this,product!!,this).showDialog()
 
+    }
 
     private fun setSelectedQuantity(quantity:String){
         binding.selectedQuantity.text = quantity
@@ -128,6 +144,7 @@ class ProductDetailsActivity : AppCompatActivity() {
             binding.description.text =    it.description
             binding.productName.text = it.name
             binding.productPrice.text ="\u209B "+ it.ProductsVariants?.get(0)?.price
+            binding.mrpPrice.text ="\u209B "+ it.ProductsVariants?.get(0)?.mrp
             binding.quantityTxt.text = it.ProductsVariants?.get(0)?.qty
             try {
 
@@ -151,16 +168,15 @@ class ProductDetailsActivity : AppCompatActivity() {
             if (productVariantList !=null && productVariantList!!.size>0){
                 setPriceAndQuantity(0)
 
-                setRadioButton()
             }
-            CoroutineScope(Dispatchers.IO).launch {
-                if (cartProductDao.isItemExist(it.id.toString())){
-                    runOnUiThread {
-                        updateAddToCart()
-                    }
-                }
-
-            }
+//            CoroutineScope(Dispatchers.IO).launch {
+//                if (cartProductDao.isItemExist(it.id.toString())){
+//                    runOnUiThread {
+//                        updateAddToCart()
+//                    }
+//                }
+//
+//            }
 
 
         }
@@ -175,6 +191,7 @@ class ProductDetailsActivity : AppCompatActivity() {
 
         binding.productPrice.text ="\u20B9 "+ price
         binding.quantityTxt.text = quantity
+        binding.variantEditText.setText(quantity)
 
     }
 
@@ -211,6 +228,7 @@ class ProductDetailsActivity : AppCompatActivity() {
 
         for (variants in productVariantList!!) {
             val radioButton = RadioButton(this)
+
             radioButton.text ="Quantity: "+ variants.qty +"\n Price: "+ variants.price
             // Set other properties of the radio button if needed
             binding.radioGroup.addView(radioButton)
@@ -220,10 +238,48 @@ class ProductDetailsActivity : AppCompatActivity() {
         // Set a listener to handle radio button selection
         binding.radioGroup.setOnCheckedChangeListener { group, checkedId ->
             val radioButton = findViewById<RadioButton>(checkedId)
-            variantIndex = checkedId - 1
+          val index =  group.indexOfChild(radioButton)
+            variantIndex = index
             setPriceAndQuantity(variantIndex)
 
         }
+    }
+
+    override fun addToCart(productData: Product, data: MutableMap<Int, Int>) {
+        CoroutineScope(Dispatchers.IO).launch {
+
+
+            var cartList = arrayListOf<CartProduct>()
+            for (variants in data) {
+                var variant = getVariantFromId(variants.key, productData)
+                cartList.add(
+                    CartProduct(
+                        productId = productData.id,
+                        description = productData.description,
+                        variant = variant,
+                        image = productData.image,
+                        quantity = variants.value,
+                        name = productData.name
+                    )
+                )
+            }
+            cartProductDao.addToCartProductList(cartList)
+        }
+    }
+
+    private fun getVariantFromId(key: Int, productData: Product): ProductsVariant? {
+
+        var listVariants = productData.ProductsVariants
+
+        if (listVariants != null) {
+            for (data in listVariants){
+                if (data.id == key)
+                {
+                    return data
+                }
+            }
+        }
+        return null
     }
 
 

@@ -21,7 +21,7 @@ import com.slyked.poojasamagri.utils.Constants
 class CartAdapter(context: Context,private val cartList:List<CartProduct>,private val listener:CartListener): RecyclerView.Adapter<CartAdapter.ViewHolder>()  {
 
     val ctx: Context = context
-
+    var total = 0
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         val productView = LayoutInflater.from(parent.context).inflate(R.layout.cart_items,parent,false)
@@ -37,9 +37,13 @@ class CartAdapter(context: Context,private val cartList:List<CartProduct>,privat
         holder.quantity_txt.text = "Quantity: " + data.variant?.qty
         holder.product_price.text = "\u20B9 "+data.variant?.price
         holder.selected_quantity.text = "x "+data.quantity.toString()
+        if (data.variant?.price !=null && data.quantity !=null) {
+            total += (data.variant.price.toInt() * data.quantity)
+        }
+
         try {
 
-            val imageUrl = Constants.IMAGE_BASE_URL+data?.image
+            val imageUrl = Constants.IMAGE_BASE_URL+data.image
             Glide.with(ctx).asBitmap().load(imageUrl).into(object : CustomTarget<Bitmap?>() {
 
                 override fun onLoadCleared(placeholder: Drawable?) {
@@ -56,16 +60,23 @@ class CartAdapter(context: Context,private val cartList:List<CartProduct>,privat
         }
 
         holder.itemView.setOnClickListener {
-            listener.onClick(data.id)
+            listener.onClick(data.id!!)
         }
         holder.deleteProduct.setOnClickListener {
-            listener.deleteItem(data.id)
+            listener.deleteItem(data.id!!)
         }
 
     }
 
+
+
     override fun getItemCount(): Int {
         return cartList.size
+    }
+
+
+    fun getSubTotal() : Int {
+        return total
     }
 
     public class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){

@@ -2,6 +2,7 @@ package com.slyked.admin.product.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.slyked.poojasamagri.products.model.ProductCategories
 
 data class Product(
     @PrimaryKey val id: Int,
@@ -9,6 +10,7 @@ data class Product(
     val ProductsVariants: List<ProductsVariant>?,
     val SubCategory: SubCategory?,
     val category_id: Int?,
+    val ProductCategories: List<ProductCategories?>,
     val createdAt: String,
     val description: String?,
     val image: String?,

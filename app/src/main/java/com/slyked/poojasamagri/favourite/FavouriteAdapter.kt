@@ -63,6 +63,10 @@ class FavouriteAdapter(context: Context,private val favouriteList:List<Favourite
             listener.removeFromFavourite(data.id)
         }
 
+        holder.add_layout.setOnClickListener {
+            listener.openVariants(data?.id!!)
+        }
+
     }
 
     override fun getItemCount(): Int {
@@ -85,5 +89,6 @@ class FavouriteAdapter(context: Context,private val favouriteList:List<Favourite
     interface ProductListener{
         fun removeFromFavourite(id:Int)
         fun onClick(id:Int)
+        fun openVariants(id:Int)
     }
 }

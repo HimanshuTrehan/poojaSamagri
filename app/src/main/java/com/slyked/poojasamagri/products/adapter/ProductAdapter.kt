@@ -41,10 +41,13 @@ class ProductAdapter @Inject constructor(context: Context,private val favouriteP
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        holder.quantity_layout.visibility = GONE
-        holder.add_layout.visibility = GONE
+     //   holder.quantity_layout.visibility = GONE
+
 
         val data = getItem(position)
+        holder.add_layout.setOnClickListener {
+            data?.id?.let { it1 -> listener.openVariants(it1) }
+        }
         holder.productName.text = data?.name
         holder.productQuanity.text = "Quantity: ${data?.ProductsVariants?.get(0)?.qty}"
 
@@ -112,6 +115,7 @@ class ProductAdapter @Inject constructor(context: Context,private val favouriteP
     interface ProductListener{
         fun addToFavourite(id:Int)
         fun onClick(id:Int)
+        fun openVariants(id:Int)
     }
 
     companion object {

@@ -78,6 +78,7 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginStart="10dp"
         android:id="@+id/CategoriesListRecyclerView"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"

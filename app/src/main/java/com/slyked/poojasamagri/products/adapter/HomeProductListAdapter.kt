@@ -73,8 +73,11 @@ class HomeProductListAdapter @Inject constructor(context: Context,private val fa
         {
             println(e)
         }
-        holder.quantity_layout.visibility = GONE
-        holder.add_layout.visibility = GONE
+      //  holder.quantity_layout.visibility = GONE
+       // holder.add_layout.visibility = GONE
+        holder.add_layout.setOnClickListener {
+            listener.openVariants(data?.id!!)
+        }
         if (data?.id !=null) {
             CoroutineScope(Dispatchers.IO).launch {
                 if (favouriteProductDao.isItemExist(data.id.toString())) {
@@ -132,6 +135,8 @@ class HomeProductListAdapter @Inject constructor(context: Context,private val fa
     interface ProductListener{
         fun addToFavourite(id:Int)
         fun onClick(id:Int)
+        fun openVariants(id:Int)
+
     }
     companion object {
         private val COMPARATOR = object : DiffUtil.ItemCallback<Product>() {

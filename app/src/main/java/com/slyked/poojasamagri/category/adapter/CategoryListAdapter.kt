@@ -3,6 +3,9 @@ package com.slyked.poojasamagri.category.adapter
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.graphics.text.LineBreaker
+import android.os.Build
+import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,8 +22,7 @@ import com.slyked.poojasamagri.R
 import com.slyked.poojasamagri.utils.Constants
 
 class CategoryListAdapter(
-    private val context: Context,
-    private val listener: ItemOperationListener
+    private val context: Context, private val listener: ItemOperationListener
 ) : PagingDataAdapter<Category, CategoryListAdapter.ViewHolder>(COMPARATOR) {
 
 
@@ -32,10 +34,17 @@ class CategoryListAdapter(
     }
 
 
+
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         val data = getItem(position)
         holder.nameTxt.text = data?.name
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            holder.nameTxt.breakStrategy = Layout.BREAK_STRATEGY_BALANCED
+        };
+
         try {
 
             val imageUrl = Constants.IMAGE_BASE_URL + data?.image
@@ -47,8 +56,7 @@ class CategoryListAdapter(
                 }
 
                 override fun onResourceReady(
-                    resource: Bitmap,
-                    transition: Transition<in Bitmap?>?
+                    resource: Bitmap, transition: Transition<in Bitmap?>?
                 ) {
                     holder.categoryImage.setImageBitmap(resource)
                 }
@@ -64,7 +72,6 @@ class CategoryListAdapter(
             }
         }
     }
-
 
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

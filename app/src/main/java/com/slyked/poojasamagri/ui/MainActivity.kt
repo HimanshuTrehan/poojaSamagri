@@ -6,14 +6,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
-import com.slyked.admin.api.CategoryServices
-import com.slyked.admin.api.ProductServices
-import com.slyked.admin.api.ResponseData
-import com.slyked.admin.api.RetrofitHelper
+import com.slyked.admin.api.*
 import com.slyked.admin.category.model.CategoryListData
 import com.slyked.admin.category.repository.CategoryRepository
 import com.slyked.admin.category.viewmodel.CategoryViewModel
 import com.slyked.admin.category.viewmodelfactory.CategoryViewModelFactory
+import com.slyked.admin.configuration.repository.ConfigurationRepository
+import com.slyked.admin.configuration.viewmodel.ConfigurationViewModel
+import com.slyked.admin.configuration.viewmodelfactory.ConfigurationViewModelFactory
 import com.slyked.admin.product.model.AllProductModel
 import com.slyked.admin.product.repository.ProductRepository
 import com.slyked.admin.product.viewmodel.ProductViewModel
@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     lateinit var productViewModel:ProductViewModel
     lateinit var categoryViewModel:CategoryViewModel
+    lateinit var configurationViewModel: ConfigurationViewModel
      var productLiveData: LiveData<ResponseData<AllProductModel>>? = null
      var categoryLiveData: LiveData<ResponseData<CategoryListData>>? =null
     var backStateName: String = ""
@@ -63,7 +64,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         println("MainActivity onCreate")
 
+
+
         createViewModels()
+        configurationViewModel.getAppConfiguration()
         binding.bottomNav.menu.getItem(0).isChecked = true
 
         integerQueue.addFirst(R.id.home)
@@ -130,6 +134,12 @@ class MainActivity : AppCompatActivity() {
         categoryViewModel = ViewModelProvider(this,
             CategoryViewModelFactory(categoryRepository)
         )[CategoryViewModel::class.java]
+
+        val configurationService = RetrofitHelper.getInstance().create(ConfigurationServices::class.java)
+        val configurationRepository = ConfigurationRepository(configurationService)
+        configurationViewModel = ViewModelProvider(this,
+            ConfigurationViewModelFactory(configurationRepository)
+        )[ConfigurationViewModel::class.java]
     }
 
 

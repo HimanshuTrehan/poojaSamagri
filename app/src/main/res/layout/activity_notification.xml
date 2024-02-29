@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/primary"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary"
-    tools:context=".ui.ContactUsActivity">
+    tools:context=".ui.NotificationActivity">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/add_categories_txt"
-            android:text="Contact Us"
+            android:text="Notification"
             android:fontFamily="@font/metropolis_semibold"
             android:textColor="@color/white"
             android:textSize="24sp"
@@ -85,10 +86,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="No SubCategory Found"/>
+            android:text="No Notifications"/>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/addSubCategoriesRecycler"
+            android:id="@+id/notificationRecycler"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -10,11 +10,6 @@
     android:background="@color/primary"
     tools:context=".fragments.HomeFragment">
 
-
-
-
-
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -262,7 +257,6 @@
     </com.google.android.material.card.MaterialCardView>
 
     <com.airbnb.lottie.LottieAnimationView
-        android:visibility="gone"
         android:elevation="10dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
